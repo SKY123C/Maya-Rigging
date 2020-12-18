@@ -1,0 +1,18 @@
+import maya.cmds as mc
+
+selection = mc.ls(sl=1, l=1)[0]
+
+
+def recursion(joint_name):
+
+    if not joint_name or not mc.objectType(joint_name, i="joint"):
+        return
+    print joint_name
+    try:
+        for joint_ch_name in mc.listRelatives(joint_name, f=1, c=1, typ="joint"):
+            recursion(joint_ch_name)
+    except:
+        pass
+
+
+recursion(selection)
